@@ -279,26 +279,17 @@
       "shift": "dia_fechar"
     },
     {
-      "active": false,
+      "active": true,
       "id": 1775777237341,
       "login": "franklin",
       "name": "Franklin",
       "role": "Encanador",
       "senha": "12345678",
       "shift": "dia_fechar"
-    },
-    {
-      "active": false,
-      "id": 1775777485677,
-      "login": "franklin1",
-      "name": "Franklin Vitorino",
-      "role": "Encanador",
-      "senha": "12345678",
-      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T23:34:12.068Z",
+  "lastSync": "2026-04-09T23:34:41.723Z",
   "records": [
     {
       "brk": 1,
@@ -321,9 +312,8 @@
       "in": "19:57",
       "name": "Guilherme",
       "obs": "Via app funcionário",
-      "out": "",
+      "out": "20:34",
       "shift": "dia_fechar"
     }
-  ],
-  "swaps": []
+  ]
 }
