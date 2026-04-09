@@ -139,7 +139,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T11:53:10.888Z",
+  "lastSync": "2026-04-09T12:09:29.332Z",
   "records": [
     {
       "break": 120,
@@ -149,7 +149,7 @@
       "in": "08:52",
       "name": "Guilherme",
       "obs": "Via reconhecimento facial",
-      "out": "",
+      "out": "09:09",
       "shift": "dia_fechar"
     }
   ],
