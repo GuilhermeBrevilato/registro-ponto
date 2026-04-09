@@ -279,7 +279,7 @@
       "shift": "dia_fechar"
     },
     {
-      "active": true,
+      "active": false,
       "id": 1775777237341,
       "login": "franklin",
       "name": "Franklin",
@@ -288,7 +288,7 @@
       "shift": "dia_fechar"
     },
     {
-      "active": true,
+      "active": false,
       "id": 1775777485677,
       "login": "franklin1",
       "name": "Franklin Vitorino",
@@ -298,7 +298,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T23:33:26.943Z",
+  "lastSync": "2026-04-09T23:34:12.068Z",
   "records": [
     {
       "brk": 1,
