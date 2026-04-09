@@ -276,7 +276,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T12:50:19.732Z",
+  "lastSync": "2026-04-09T12:51:04.772Z",
   "records": [
     {
       "break": 120,
@@ -287,6 +287,17 @@
       "name": "Guilherme",
       "obs": "Via reconhecimento facial",
       "out": "09:09",
+      "shift": "dia_fechar"
+    },
+    {
+      "break": 120,
+      "date": "2026-04-09",
+      "empId": 1775738999587,
+      "id": 1775739062766,
+      "in": "09:51",
+      "name": "Silvia Maria",
+      "obs": "Via reconhecimento facial",
+      "out": "",
       "shift": "dia_fechar"
     }
   ],
