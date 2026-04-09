@@ -141,16 +141,16 @@
     },
     {
       "active": true,
-      "id": 1775772909351,
+      "id": 1775773148346,
       "login": "mylene",
       "name": "Mylene Cristina",
       "role": "Auxiliar",
-      "senha": "1234",
+      "senha": "12345",
       "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T22:15:11.352Z",
+  "lastSync": "2026-04-09T22:19:10.349Z",
   "records": [
     {
       "brk": 120,
