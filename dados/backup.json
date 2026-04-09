@@ -552,10 +552,19 @@
       "role": "Auxiliar",
       "senha": "1010",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775747300318,
+      "login": "guisb",
+      "name": "Guisb",
+      "role": "Auxiliar",
+      "senha": "1010",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T15:07:50.572Z",
+  "lastSync": "2026-04-09T15:08:22.320Z",
   "records": [
     {
       "break": 120,
