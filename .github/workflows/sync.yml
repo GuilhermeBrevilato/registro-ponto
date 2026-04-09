@@ -36,8 +36,10 @@ jobs:
         run: |
           git config user.name  "Sync Bot"
           git config user.email "sync@registro-ponto"
+          git config pull.rebase false
           git add dados/backup.json
           git diff --cached --quiet && echo "Sem alterações" && exit 0
           git commit -m "sync: $(date -u '+%d/%m/%Y %H:%M') UTC"
-          git pull --rebase origin main || git rebase --abort
-          git push --force-with-lease || git push
+          git fetch origin main
+          git merge -X ours origin/main -m "merge sync"
+          git push origin main
