@@ -280,7 +280,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T22:52:07.403Z",
+  "lastSync": "2026-04-09T22:57:52.005Z",
   "records": [
     {
       "brk": 1,
@@ -294,7 +294,17 @@
       "obs": "Via app funcionário",
       "out": "19:30",
       "shift": "dia_fechar"
+    },
+    {
+      "brk": 120,
+      "date": "2026-04-09",
+      "empId": 1775775116121,
+      "id": 1775775472004,
+      "in": "19:57",
+      "name": "Guilherme",
+      "obs": "Via app funcionário",
+      "out": "",
+      "shift": "dia_fechar"
     }
-  ],
-  "swaps": []
+  ]
 }
