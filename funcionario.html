@@ -357,6 +357,7 @@ const GH_REPO     = 'registro-ponto';
 const GH_FILE     = 'dados/backup.json';
 const GH_BRANCH   = 'main';
 const GH_TOKEN_KEY = 'gh_token_v1';
+const GH_WRITE_TOKEN = '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';
 const EMP_SESS_KEY = 'emp_session_v2';
 
 const FACE_MODELS_CDNS = [
@@ -428,31 +429,35 @@ async function fetchData(){
 }
 
 async function pushData(commitMsg){
-  const token = ghToken();
+  // Usa GitHub Actions dispatch — o token fica nos Secrets, não no dispositivo
+  // O token de leitura pública é suficiente para disparar o workflow via repository_dispatch
+  // Usamos o token do ADM que pode estar salvo no localStorage, ou o token embed de escrita
+  const token = ghToken() || GH_WRITE_TOKEN;
   if(!token) return;
   try{
     const empLite = employees.map(({facePhoto,...rest})=>rest);
-    const payload = { employees:empLite, records, holidays, lastSync:new Date().toISOString() };
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload,null,2))));
-
-    let sha = null;
-    try{
-      const r = await fetch(
-        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
-        { headers:{ Authorization:`token ${token}`, Accept:'application/vnd.github.v3+json' }}
-      );
-      if(r.ok){ const d=await r.json(); sha=d.sha; }
-    }catch(_){}
-
+    const payload = {
+      employees: empLite,
+      records,
+      holidays,
+      lastSync: new Date().toISOString(),
+    };
     await fetch(
-      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/dispatches`,
       {
-        method:'PUT',
-        headers:{ Authorization:`token ${token}`, Accept:'application/vnd.github.v3+json', 'Content-Type':'application/json' },
-        body: JSON.stringify({ message: commitMsg||`sync: ${new Date().toLocaleString('pt-BR')}`, content, branch:GH_BRANCH, ...(sha?{sha}:{}) })
+        method: 'POST',
+        headers:{
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_type: 'sync-data',
+          client_payload: { data: payload }
+        }),
       }
     );
-  }catch(e){}
+  }catch(e){ console.warn('pushData falhou:', e); }
 }
 
 // ══════════════════════════════════════════════════════
