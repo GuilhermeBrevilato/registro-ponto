@@ -413,10 +413,19 @@
       "role": "Auxiliar",
       "senha": "gsb1010",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775746662490,
+      "login": "gsb",
+      "name": "Guilhermesb",
+      "role": "Auxiliar",
+      "senha": "1010",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T14:57:26.375Z",
+  "lastSync": "2026-04-09T14:57:44.491Z",
   "records": [
     {
       "break": 120,
