@@ -136,10 +136,19 @@
       "name": "Silvia Maria",
       "role": "",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775748332942,
+      "login": "gsb",
+      "name": "Guilherme",
+      "role": "Auxiliar",
+      "senha": "1010",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T15:25:15.026Z",
+  "lastSync": "2026-04-09T15:25:34.943Z",
   "records": [
     {
       "break": 120,
