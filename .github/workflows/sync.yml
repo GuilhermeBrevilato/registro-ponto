@@ -17,9 +17,18 @@ jobs:
           token: ${{ secrets.GH_PAT }}
 
       - name: Salvar dados
+        env:
+          PAYLOAD: ${{ toJson(github.event.client_payload.data) }}
         run: |
           mkdir -p dados
-          echo '${{ toJson(github.event.client_payload.data) }}' > dados/backup.json
+          python3 -c "
+          import os, json
+          payload = os.environ['PAYLOAD']
+          data = json.loads(payload)
+          with open('dados/backup.json', 'w', encoding='utf-8') as f:
+              json.dump(data, f, ensure_ascii=False, indent=2)
+          print('Dados salvos com sucesso')
+          "
 
       - name: Commit
         run: |
