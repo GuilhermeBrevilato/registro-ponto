@@ -286,10 +286,19 @@
       "role": "Encanador",
       "senha": "12345678",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775777889764,
+      "login": "lari",
+      "name": "Teste",
+      "role": "Auxiliar",
+      "senha": "1234",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T23:34:41.723Z",
+  "lastSync": "2026-04-09T23:38:11.768Z",
   "records": [
     {
       "brk": 1,
@@ -315,5 +324,6 @@
       "out": "20:34",
       "shift": "dia_fechar"
     }
-  ]
+  ],
+  "swaps": []
 }
