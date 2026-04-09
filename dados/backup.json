@@ -1,7 +1,7 @@
 {
   "employees": [
     {
-      "active": true,
+      "active": false,
       "faceDescriptor": [
         -0.0298588071018457,
         0.161164432764053,
@@ -133,6 +133,7 @@
         0.0257393885403872
       ],
       "id": 1775735318089,
+      "login": "",
       "name": "Guilherme",
       "role": "Técnico",
       "shift": "dia_fechar"
@@ -415,7 +416,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T14:49:56.915Z",
+  "lastSync": "2026-04-09T14:50:09.439Z",
   "records": [
     {
       "break": 120,
