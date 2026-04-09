@@ -139,7 +139,19 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T11:51:49.916Z",
-  "records": [],
+  "lastSync": "2026-04-09T11:52:57.080Z",
+  "records": [
+    {
+      "break": 120,
+      "date": "2026-04-09",
+      "empId": 1775735318089,
+      "id": 1775735575076,
+      "in": "08:52",
+      "name": "Guilherme",
+      "obs": "Via reconhecimento facial",
+      "out": "",
+      "shift": "dia_fechar"
+    }
+  ],
   "swaps": []
 }
