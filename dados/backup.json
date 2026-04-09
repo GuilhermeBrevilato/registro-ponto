@@ -280,7 +280,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T22:28:16.044Z",
+  "lastSync": "2026-04-09T22:28:26.674Z",
   "records": [
     {
       "brk": 120,
@@ -291,6 +291,17 @@
       "name": "Guilherme",
       "obs": "Via app funcionário",
       "out": "19:05",
+      "shift": "dia_fechar"
+    },
+    {
+      "brk": 120,
+      "date": "2026-04-09",
+      "empId": 1775773148346,
+      "id": 1775773706674,
+      "in": "19:28",
+      "name": "Mylene Cristina",
+      "obs": "Via app funcionário",
+      "out": "",
       "shift": "dia_fechar"
     }
   ]
