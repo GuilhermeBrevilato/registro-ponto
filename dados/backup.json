@@ -437,7 +437,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T23:41:58.761Z",
+  "lastSync": "2026-04-09T23:44:09.812Z",
   "records": [
     {
       "brk": 1,
@@ -471,7 +471,7 @@
       "in": "20:41",
       "name": "Franklin José",
       "obs": "Via app funcionário",
-      "out": "",
+      "out": "20:44",
       "shift": "dia_fechar"
     }
   ]
