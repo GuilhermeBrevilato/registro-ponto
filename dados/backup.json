@@ -280,7 +280,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T22:29:36.970Z",
+  "lastSync": "2026-04-09T22:30:18.652Z",
   "records": [
     {
       "brk": 120,
@@ -294,11 +294,12 @@
       "shift": "dia_fechar"
     },
     {
-      "brk": 120,
+      "brk": 1,
       "date": "2026-04-09",
       "empId": 1775773148346,
       "id": 1775773706674,
       "in": "19:28",
+      "lunch_in": "19:30",
       "lunch_out": "19:29",
       "name": "Mylene Cristina",
       "obs": "Via app funcionário",
