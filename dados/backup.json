@@ -289,16 +289,25 @@
     },
     {
       "active": true,
-      "id": 1775777889764,
-      "login": "lari",
-      "name": "Teste",
-      "role": "Auxiliar",
-      "senha": "1234",
+      "id": 1775777485677,
+      "login": "franklin1",
+      "name": "Franklin Vitorino",
+      "role": "Encanador",
+      "senha": "12345678",
+      "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775777910558,
+      "login": "franklin2",
+      "name": "Franklin José",
+      "role": "Encanador",
+      "senha": "12345",
       "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T23:38:11.768Z",
+  "lastSync": "2026-04-09T23:38:32.561Z",
   "records": [
     {
       "brk": 1,
@@ -321,7 +330,7 @@
       "in": "19:57",
       "name": "Guilherme",
       "obs": "Via app funcionário",
-      "out": "20:34",
+      "out": "",
       "shift": "dia_fechar"
     }
   ],
