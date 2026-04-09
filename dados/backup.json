@@ -691,10 +691,19 @@
       "role": "Auxiliar",
       "senha": "1010",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775747587033,
+      "login": "guisbb",
+      "name": "Guisbb",
+      "role": "Auxiliar",
+      "senha": "1010",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T15:12:38.743Z",
+  "lastSync": "2026-04-09T15:13:09.033Z",
   "records": [
     {
       "break": 120,
