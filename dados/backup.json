@@ -136,10 +136,17 @@
       "name": "Guilherme",
       "role": "Técnico",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775738999587,
+      "name": "Silvia Maria",
+      "role": "",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T12:10:46.007Z",
+  "lastSync": "2026-04-09T12:50:01.591Z",
   "records": [
     {
       "break": 120,
