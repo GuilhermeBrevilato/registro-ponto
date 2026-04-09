@@ -1,7 +1,15 @@
 {
-  "employees": [],
+  "employees": [
+    {
+      "active": true,
+      "id": 1775735318089,
+      "name": "Guilherme",
+      "role": "Técnico",
+      "shift": "dia_fechar"
+    }
+  ],
   "holidays": [],
-  "lastSync": "2026-04-09T11:48:15.379Z",
+  "lastSync": "2026-04-09T11:48:40.091Z",
   "records": [],
   "swaps": []
 }
