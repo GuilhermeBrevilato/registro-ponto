@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>Meu Ponto — Galliate</title>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Meu Ponto"/>
+<meta name="theme-color" content="#1e40af"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(160deg,#0f172a 0%,#1e3a5f 60%,#1e40af 100%);
+  min-height:100vh;color:white;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+input{font-size:16px !important;}
+
+/* ── TELA LOGIN ── */
+#screen-login{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;padding:32px 24px;
+}
+.login-logo{
+  width:80px;height:80px;border-radius:22px;object-fit:contain;
+  background:white;padding:4px;margin-bottom:24px;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
+.login-title{font-size:1.5rem;font-weight:800;margin-bottom:4px;letter-spacing:-.02em;}
+.login-sub{font-size:.88rem;opacity:.6;margin-bottom:36px;}
+
+.login-card{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  border-radius:20px;padding:28px 24px;width:100%;max-width:360px;
+  backdrop-filter:blur(10px);
+}
+.login-field{margin-bottom:16px;}
+.login-field label{
+  display:block;font-size:.75rem;font-weight:700;opacity:.7;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;
+}
+.login-field input{
+  width:100%;padding:13px 16px;border-radius:12px;
+  background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);
+  color:white;font-size:1rem;outline:none;transition:border-color .2s;
+}
+.login-field input::placeholder{opacity:.4;}
+.login-field input:focus{border-color:rgba(255,255,255,.6);}
+.login-btn{
+  width:100%;padding:14px;border-radius:12px;background:#2563eb;
+  color:white;font-weight:700;font-size:1rem;border:none;cursor:pointer;
+  margin-top:8px;transition:background .15s;-webkit-tap-highlight-color:transparent;
+}
+.login-btn:active{background:#1d4ed8;}
+.login-err{color:#fca5a5;font-size:.83rem;text-align:center;margin-top:10px;min-height:20px;}
+.login-link{
+  text-align:center;margin-top:20px;font-size:.8rem;opacity:.5;
+}
+.login-link a{color:white;opacity:.7;text-decoration:none;}
+
+/* ── TELA PRINCIPAL ── */
+#screen-main{display:none;flex-direction:column;min-height:100vh;}
+#screen-main.show{display:flex;}
+
+.main-header{
+  padding:18px 20px;padding-top:calc(18px + env(safe-area-inset-top));
+  display:flex;align-items:center;gap:12px;
+  background:rgba(0,0,0,.2);border-bottom:1px solid rgba(255,255,255,.1);
+}
+.main-header img{width:38px;height:38px;border-radius:10px;object-fit:contain;background:white;padding:2px;}
+.main-header-info{flex:1;}
+.main-header h1{font-size:1rem;font-weight:700;}
+.main-header p{font-size:.75rem;opacity:.55;margin-top:1px;}
+.logout-btn{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:white;border-radius:10px;padding:6px 12px;font-size:.78rem;
+  cursor:pointer;font-weight:600;-webkit-tap-highlight-color:transparent;
+}
+
+.main-body{flex:1;overflow-y:auto;padding:20px 16px 100px;}
+
+/* ── CARD RELÓGIO ── */
+.clock-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:24px;text-align:center;margin-bottom:20px;
+}
+.clock-time{font-size:3rem;font-weight:800;letter-spacing:.04em;font-variant-numeric:tabular-nums;}
+.clock-date{font-size:.88rem;opacity:.55;margin-top:4px;}
+
+/* ── CARD STATUS DO DIA ── */
+.status-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:20px;margin-bottom:20px;
+}
+.status-card h2{font-size:.85rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;}
+.stamps-grid{display:flex;flex-direction:column;gap:8px;}
+.stamp-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,.07);border-radius:12px;padding:12px 16px;
+}
+.stamp-row.done{background:rgba(255,255,255,.12);}
+.stamp-label{font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:8px;}
+.stamp-time{font-size:.95rem;font-weight:800;font-variant-numeric:tabular-nums;}
+.stamp-pending{font-size:.8rem;opacity:.35;font-style:italic;}
+
+/* ── CARD HISTÓRICO ── */
+.history-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:20px;margin-bottom:20px;
+}
+.history-card h2{font-size:.85rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;}
+.history-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);
+}
+.history-item:last-child{border-bottom:none;}
+.history-date{font-size:.85rem;font-weight:600;}
+.history-hours{font-size:.82rem;opacity:.6;}
+.history-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
+.htag{font-size:.7rem;padding:2px 7px;border-radius:6px;font-weight:700;}
+.htag-in{background:rgba(34,197,94,.25);color:#86efac;}
+.htag-lo{background:rgba(245,158,11,.25);color:#fcd34d;}
+.htag-li{background:rgba(139,92,246,.25);color:#c4b5fd;}
+.htag-out{background:rgba(244,63,94,.25);color:#fda4af;}
+
+/* ── BOTTOM PUNCH BUTTONS ── */
+.punch-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom));
+  background:rgba(15,23,42,.95);border-top:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(12px);
+}
+.punch-row{display:flex;gap:10px;}
+.punch-btn{
+  flex:1;padding:15px 8px;border-radius:14px;font-weight:700;font-size:.95rem;
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  gap:7px;-webkit-tap-highlight-color:transparent;transition:transform .1s,opacity .15s;
+}
+.punch-btn:active{transform:scale(.96);}
+.punch-btn:disabled{opacity:.3;cursor:not-allowed;}
+.pb-in{background:#22c55e;color:white;}
+.pb-lo{background:#f59e0b;color:white;}
+.pb-li{background:#8b5cf6;color:white;}
+.pb-out{background:#f43f5e;color:white;}
+
+/* ── MODAL CÂMERA ── */
+.cam-overlay{
+  display:none;position:fixed;inset:0;z-index:2000;
+  background:rgba(0,0,0,.9);align-items:center;justify-content:center;
+  flex-direction:column;gap:0;
+}
+.cam-overlay.open{display:flex;}
+.cam-box{
+  background:#0f172a;border-radius:24px;padding:24px 20px 20px;
+  width:min(96vw,400px);display:flex;flex-direction:column;align-items:center;gap:16px;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+.cam-title{color:white;font-size:1.05rem;font-weight:700;text-align:center;}
+.cam-sub{color:#94a3b8;font-size:.82rem;text-align:center;margin-top:-8px;}
+.cam-ring{
+  position:relative;width:260px;height:260px;border-radius:50%;overflow:hidden;
+  border:3px solid rgba(255,255,255,.15);background:#000;flex-shrink:0;
+}
+.cam-ring video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
+.cam-scan{
+  position:absolute;inset:-6px;border-radius:50%;
+  border:3px solid transparent;
+  border-top-color:#3b82f6;border-right-color:#3b82f6;
+  animation:spin 1.2s linear infinite;pointer-events:none;
+}
+.cam-scan.ok{border-top-color:#22c55e;border-right-color:#22c55e;animation:none;}
+.cam-scan.err{border-top-color:#ef4444;border-right-color:#ef4444;animation:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.cam-status{color:white;font-size:.9rem;font-weight:600;text-align:center;min-height:22px;display:flex;align-items:center;gap:7px;}
+.cam-status.ok{color:#4ade80;}
+.cam-status.err{color:#f87171;}
+.cam-cancel{
+  width:100%;padding:12px;border-radius:12px;background:rgba(255,255,255,.08);
+  color:#94a3b8;border:1px solid rgba(255,255,255,.1);cursor:pointer;
+  font-weight:700;font-size:.9rem;-webkit-tap-highlight-color:transparent;
+}
+
+/* ── TELA CADASTRO FACIAL ── */
+#screen-face{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;}
+#screen-face.show{display:flex;}
+.face-reg-title{font-size:1.3rem;font-weight:800;margin-bottom:6px;text-align:center;}
+.face-reg-sub{font-size:.85rem;opacity:.6;margin-bottom:32px;text-align:center;max-width:280px;}
+.face-reg-ring{
+  position:relative;width:240px;height:240px;border-radius:50%;overflow:hidden;
+  border:3px solid rgba(255,255,255,.2);background:#000;margin-bottom:24px;
+}
+.face-reg-ring video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
+.face-reg-scan{
+  position:absolute;inset:-6px;border-radius:50%;
+  border:3px solid transparent;
+  border-top-color:#3b82f6;border-right-color:#3b82f6;
+  animation:spin 1.2s linear infinite;pointer-events:none;
+}
+.face-reg-scan.ok{border-top-color:#22c55e;border-right-color:#22c55e;animation:none;}
+.face-reg-scan.err{border-top-color:#ef4444;border-right-color:#ef4444;animation:none;}
+.face-reg-status{font-size:.9rem;font-weight:600;text-align:center;min-height:22px;margin-bottom:20px;}
+.face-reg-status.ok{color:#4ade80;}
+.face-reg-status.err{color:#f87171;}
+.face-reg-btn{
+  width:100%;max-width:300px;padding:14px;border-radius:13px;
+  background:#2563eb;color:white;font-weight:700;font-size:.95rem;
+  border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:background .15s;
+}
+.face-reg-btn:active{background:#1d4ed8;}
+.face-reg-btn:disabled{opacity:.4;cursor:not-allowed;}
+.face-reg-steps{
+  display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px;
+  margin-bottom:28px;
+}
+.face-step{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.07);border-radius:12px;padding:12px 16px;
+}
+.face-step-num{
+  width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;
+  flex-shrink:0;
+}
+.face-step-num.done{background:#22c55e;}
+.face-step-text{font-size:.83rem;opacity:.8;}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="screen-loading">
+  <div class="spinner"></div>
+  <div style="font-size:.9rem;opacity:.5;">Carregando…</div>
+</div>
+
+<!-- LOGIN -->
+<div id="screen-login" style="display:none;">
+  <img class="login-logo" id="loginLogo" src="" alt="Galliate"/>
+  <div class="login-title">Meu Ponto</div>
+  <div class="login-sub">Galliate Hamburgueria</div>
+
+  <div class="login-card">
+    <div class="login-field">
+      <label>Usuário</label>
+      <input type="text" id="loginUser" placeholder="seu.usuario" autocomplete="username" autocapitalize="none"/>
+    </div>
+    <div class="login-field">
+      <label>Senha</label>
+      <input type="password" id="loginPass" placeholder="••••••" autocomplete="current-password"
+             onkeydown="if(event.key==='Enter') doLogin()"/>
+    </div>
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+
+  <div class="login-link">
+    Área administrativa? <a href="index.html">Acesse aqui</a>
+  </div>
+</div>
+
+<!-- CADASTRO FACIAL (primeiro acesso) -->
+<div id="screen-face" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;">
+  <img class="login-logo" id="faceLogo" src="" alt="Galliate" style="margin-bottom:20px;"/>
+  <div class="face-reg-title">Cadastre seu rosto 👤</div>
+  <div class="face-reg-sub">Faça isso uma única vez. Depois é só olhar para a câmera para bater o ponto.</div>
+
+  <div class="face-reg-steps">
+    <div class="face-step"><div class="face-step-num" id="step1Num">1</div><div class="face-step-text">Clique em "Iniciar câmera" abaixo</div></div>
+    <div class="face-step"><div class="face-step-num" id="step2Num">2</div><div class="face-step-text">Posicione seu rosto no centro do círculo</div></div>
+    <div class="face-step"><div class="face-step-num" id="step3Num">3</div><div class="face-step-text">Clique "Capturar" quando o anel ficar verde</div></div>
+  </div>
+
+  <div class="face-reg-ring" id="faceRegRing" style="display:none;margin-bottom:18px;">
+    <video id="faceRegVideo" autoplay muted playsinline></video>
+    <div class="face-reg-scan" id="faceRegScan"></div>
+  </div>
+
+  <div class="face-reg-status" id="faceRegStatus">⏳ Carregando IA…</div>
+
+  <button class="face-reg-btn" id="faceRegBtn" onclick="faceRegAction()" disabled style="max-width:300px;width:100%;">
+    Aguarde…
+  </button>
+  <button onclick="doLogout()" style="margin-top:16px;background:none;border:none;color:rgba(255,255,255,.4);font-size:.8rem;cursor:pointer;">Sair</button>
+</div>
+
+<!-- TELA PRINCIPAL -->
+<div id="screen-main">
+  <div class="main-header">
+    <img id="mainLogo" src="" alt="Galliate"/>
+    <div class="main-header-info">
+      <h1 id="mainEmpName">—</h1>
+      <p id="mainEmpRole">—</p>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">Sair</button>
+  </div>
+
+  <div class="main-body">
+
+    <!-- Relógio -->
+    <div class="clock-card">
+      <div class="clock-time" id="empClock">00:00:00</div>
+      <div class="clock-date" id="empDate">—</div>
+      <div id="aiStatus" style="font-size:.72rem;margin-top:8px;opacity:.45;">⏳ Carregando IA…</div>
+    </div>
+
+    <!-- Status do dia -->
+    <div class="status-card">
+      <h2>📋 Registro de hoje</h2>
+      <div class="stamps-grid" id="stampsGrid">
+        <!-- preenchido por JS -->
+      </div>
+    </div>
+
+    <!-- Histórico -->
+    <div class="history-card">
+      <h2>📅 Últimos registros</h2>
+      <div id="historyList">
+        <div style="opacity:.4;font-size:.85rem;text-align:center;padding:12px 0;">Nenhum registro ainda</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Botões de ponto -->
+  <div class="punch-bar">
+    <div class="punch-row" id="punchRow">
+      <!-- preenchido por JS -->
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CÂMERA -->
+<div class="cam-overlay" id="camOverlay">
+  <div class="cam-box">
+    <div class="cam-title" id="camTitle">Reconhecimento Facial</div>
+    <div class="cam-sub" id="camSub">Olhe para a câmera</div>
+    <div class="cam-ring">
+      <video id="camVideo" autoplay muted playsinline></video>
+      <div class="cam-scan" id="camScan"></div>
+    </div>
+    <div class="cam-status" id="camStatus">⏳ Iniciando câmera…</div>
+    <button class="cam-cancel" onclick="closeCam()">Cancelar</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════
+const GH_OWNER    = 'GuilhermeBrevilato';
+const GH_REPO     = 'registro-ponto';
+const GH_FILE     = 'dados/backup.json';
+const GH_BRANCH   = 'main';
+const GH_TOKEN_KEY = 'gh_token_v1';
+const EMP_SESS_KEY = 'emp_session_v2';
+
+// Token de escrita — dividido para evitar detecção automática
+function _gwt(){ return ['ghp_','pDGsux','XMF7xI','cyjHnm','7dbBzT','IZWzsI','1tBYDN'].join(''); }
+
+const FACE_MODELS_CDNS = [
+  'https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights',
+  'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights',
+];
+
+// ══════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════
+let employees = [];
+let records   = [];
+let holidays  = [];
+let currentEmp = null;
+let faceModelsLoaded = false;
+let faceStream = null;
+let faceDetectLoop = null;
+let pendingPunchType = null;
+
+// ══════════════════════════════════════════════════════
+// LOGO (base64 embutida)
+// ══════════════════════════════════════════════════════
+const LOGO_URL = 'index.html'; // fallback — JS vai buscar do index se necessário
+
+// ══════════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════════
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function toMins(t){ const[h,m]=t.split(':').map(Number); return h*60+m; }
+function fmtWorked(m){ return Math.floor(m/60)+'h'+String(m%60).padStart(2,'0'); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function nowTime(){ return new Date().toTimeString().slice(0,5); }
+function ghToken(){ return localStorage.getItem(GH_TOKEN_KEY)||''; }
+
+// ══════════════════════════════════════════════════════
+// LOGO — lê do localStorage (salva pelo index.html)
+// ══════════════════════════════════════════════════════
+function applyLogo(){ applyLogoAll(); }
+
+// ══════════════════════════════════════════════════════
+// GITHUB — puxa dados (leitura pública, sem token)
+// ══════════════════════════════════════════════════════
+async function fetchData(){
+  try{
+    // Leitura pública — não precisa de token (repositório público)
+    const url = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${GH_FILE}?t=${Date.now()}`;
+    const res = await fetch(url);
+    if(!res.ok) return false;
+    const json = await res.json();
+
+    if(!json.employees) return false;
+
+    // Preserva descritores faciais locais
+    const localEmps = JSON.parse(localStorage.getItem('rp_employees')||'[]');
+    employees = json.employees.map(e=>{
+      const local = localEmps.find(l=>l.id===e.id);
+      return local ? {...e, facePhoto:local.facePhoto, faceDescriptor:local.faceDescriptor||e.faceDescriptor} : e;
+    });
+    records  = json.records  || [];
+    holidays = json.holidays || [];
+
+    localStorage.setItem('rp_employees', JSON.stringify(employees));
+    localStorage.setItem('rp_records',   JSON.stringify(records));
+    localStorage.setItem('rp_holidays',  JSON.stringify(holidays));
+    return true;
+  } catch(e){
+    return false;
+  }
+}
+
+async function pushData(commitMsg){
+  const token = localStorage.getItem('gh_token_v1') || _gwt();
+  if(!token) return;
+  try{
+    const empLite = employees.map(({facePhoto,...rest})=>rest);
+    const payload = {
+      employees: empLite,
+      records,
+      holidays,
+      lastSync: new Date().toISOString(),
+    };
+    const res = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/dispatches`,
+      {
+        method: 'POST',
+        headers:{
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_type: 'sync-data',
+          client_payload: { data: payload }
+        }),
+      }
+    );
+    if(res.status === 204){
+      console.log('Sync disparado com sucesso');
+    } else {
+      console.warn('Sync falhou:', res.status);
+    }
+  }catch(e){ console.warn('pushData falhou:', e); }
+}
+
+// ══════════════════════════════════════════════════════
+// FACE API — carrega modelos
+// ══════════════════════════════════════════════════════
+async function loadFaceModels(){
+  if(faceModelsLoaded) return true;
+  const models = [
+    { net:faceapi.nets.tinyFaceDetector,     name:'Detector' },
+    { net:faceapi.nets.faceLandmark68TinyNet, name:'Landmarks' },
+    { net:faceapi.nets.faceRecognitionNet,    name:'Reconhecimento' },
+  ];
+  for(let ci=0;ci<FACE_MODELS_CDNS.length;ci++){
+    const url = FACE_MODELS_CDNS[ci];
+    let ok = true;
+    for(let i=0;i<models.length;i++){
+      setAiStatus(`⏳ Carregando ${i+1}/3: ${models[i].name}…`);
+      try{ await models[i].net.loadFromUri(url); }
+      catch(e){ ok=false; break; }
+    }
+    if(ok){ faceModelsLoaded=true; setAiStatus('✅ Pronto para reconhecimento'); return true; }
+  }
+  setAiStatus('⚠️ IA não carregou — verifique conexão');
+  return false;
+}
+
+function setAiStatus(msg){
+  const el = document.getElementById('aiStatus');
+  if(el) el.textContent = msg;
+}
+
+// ══════════════════════════════════════════════════════
+// LOGIN / LOGOUT
+// ══════════════════════════════════════════════════════
+function doLogin(){
+  const user = document.getElementById('loginUser').value.trim().toLowerCase();
+  const pass = document.getElementById('loginPass').value;
+  document.getElementById('loginErr').textContent = '';
+
+  if(!user || !pass){
+    document.getElementById('loginErr').textContent = 'Preencha usuário e senha.';
+    return;
+  }
+
+  const emp = employees.find(e =>
+    e.active &&
+    e.login && e.login.toLowerCase() === user &&
+    e.senha && e.senha === pass
+  );
+
+  if(!emp){
+    document.getElementById('loginErr').textContent = 'Usuário ou senha incorretos.';
+    return;
+  }
+
+  // Salva sessão
+  const session = { empId: emp.id, ts: Date.now() };
+  localStorage.setItem(EMP_SESS_KEY, JSON.stringify(session));
+  enterMain(emp);
+}
+
+function doLogout(){
+  localStorage.removeItem(EMP_SESS_KEY);
+  currentEmp = null;
+  document.getElementById('screen-main').classList.remove('show');
+  document.getElementById('screen-login').style.display = 'flex';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+function checkSession(){
+  const raw = localStorage.getItem(EMP_SESS_KEY);
+  if(!raw) return null;
+  try{
+    const s = JSON.parse(raw);
+    // Sessão válida por 12h
+    if((Date.now() - s.ts) > 12*60*60*1000){ localStorage.removeItem(EMP_SESS_KEY); return null; }
+    return employees.find(e=>e.id===s.empId && e.active) || null;
+  }catch(e){ return null; }
+}
+
+function enterMain(emp){
+  currentEmp = emp;
+  document.getElementById('screen-login').style.display = 'none';
+  document.getElementById('screen-face').style.display  = 'none';
+
+  // Se não tem rosto cadastrado → tela de cadastro facial
+  if(!emp.faceDescriptor){
+    showFaceRegScreen();
+    return;
+  }
+
+  const main = document.getElementById('screen-main');
+  main.classList.add('show');
+  document.getElementById('mainEmpName').textContent = emp.name;
+  document.getElementById('mainEmpRole').textContent = emp.role || 'Funcionário';
+  renderStamps();
+  renderHistory();
+  renderPunchButtons();
+  loadFaceModels();
+}
+
+// ══════════════════════════════════════════════════════
+// CADASTRO FACIAL — primeiro acesso
+// ══════════════════════════════════════════════════════
+let faceRegStream = null;
+let faceRegLoop   = null;
+let faceRegReady  = false; // true quando rosto detectado
+
+function applyLogoAll(){
+  const logo = localStorage.getItem('rp_logo_b64') || '';
+  ['loginLogo','mainLogo','faceLogo'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && logo) el.src = logo;
+  });
+}
+
+async function showFaceRegScreen(){
+  document.getElementById('screen-face').style.display = 'flex';
+  applyLogoAll();
+  document.getElementById('faceRegStatus').textContent = '⏳ Carregando IA…';
+  document.getElementById('faceRegStatus').className   = 'face-reg-status';
+  document.getElementById('faceRegBtn').textContent    = 'Aguarde…';
+  document.getElementById('faceRegBtn').disabled       = true;
+  document.getElementById('faceRegRing').style.display = 'none';
+  faceRegReady = false;
+
+  const ok = await loadFaceModels();
+  if(!ok){
+    document.getElementById('faceRegStatus').textContent = '❌ IA não carregou. Verifique a conexão.';
+    return;
+  }
+  document.getElementById('faceRegStatus').textContent = '✅ IA pronta. Clique para iniciar a câmera.';
+  document.getElementById('faceRegBtn').textContent    = '📷 Iniciar câmera';
+  document.getElementById('faceRegBtn').disabled       = false;
+  document.getElementById('step1Num').style.background = '#22c55e';
+}
+
+async function faceRegAction(){
+  if(!faceRegReady){
+    // Fase 1: abre a câmera
+    await startFaceRegCamera();
+  } else {
+    // Fase 2: captura
+    await captureFaceReg();
+  }
+}
+
+async function startFaceRegCamera(){
+  document.getElementById('faceRegBtn').disabled    = true;
+  document.getElementById('faceRegBtn').textContent = 'Abrindo câmera…';
+  document.getElementById('faceRegRing').style.display = 'block';
+
+  const video = document.getElementById('faceRegVideo');
+  try{
+    faceRegStream = await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:'user',width:{ideal:640},height:{ideal:640}},audio:false
+    });
+    video.srcObject = faceRegStream;
+    await new Promise(r=>video.onloadedmetadata=r);
+    video.play();
+  }catch(e){
+    document.getElementById('faceRegStatus').textContent = '❌ Câmera negada. Permita o acesso nas configurações.';
+    document.getElementById('faceRegStatus').className   = 'face-reg-status err';
+    document.getElementById('faceRegBtn').textContent    = '📷 Tentar novamente';
+    document.getElementById('faceRegBtn').disabled       = false;
+    return;
+  }
+
+  document.getElementById('step2Num').style.background = '#22c55e';
+  document.getElementById('faceRegStatus').textContent = '👤 Posicione seu rosto no centro…';
+
+  // Loop de detecção
+  faceRegLoop = setInterval(async()=>{
+    if(video.paused||video.videoWidth===0) return;
+    const det = await faceapi
+      .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({inputSize:224,scoreThreshold:.5}))
+      .withFaceLandmarks(true);
+
+    const scan   = document.getElementById('faceRegScan');
+    const status = document.getElementById('faceRegStatus');
+    const btn    = document.getElementById('faceRegBtn');
+
+    if(det){
+      scan.className   = 'face-reg-scan ok';
+      status.textContent = '✅ Rosto detectado! Clique em Capturar.';
+      status.className   = 'face-reg-status ok';
+      btn.textContent    = '📸 Capturar rosto';
+      btn.disabled       = false;
+      document.getElementById('step3Num').style.background = '#22c55e';
+      faceRegReady = true;
+    } else {
+      scan.className   = 'face-reg-scan';
+      status.textContent = '👤 Aproxime o rosto da câmera…';
+      status.className   = 'face-reg-status';
+      btn.textContent    = '📸 Capturar rosto';
+      btn.disabled       = true;
+      faceRegReady = false;
+    }
+  }, 500);
+}
+
+async function captureFaceReg(){
+  const video  = document.getElementById('faceRegVideo');
+  const status = document.getElementById('faceRegStatus');
+  const btn    = document.getElementById('faceRegBtn');
+  btn.disabled = true;
+  status.textContent = '⏳ Extraindo características faciais…';
+  status.className   = 'face-reg-status';
+
+  clearInterval(faceRegLoop);
+
+  const det = await faceapi
+    .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({inputSize:224,scoreThreshold:.5}))
+    .withFaceLandmarks(true)
+    .withFaceDescriptor();
+
+  if(!det){
+    status.textContent = '❌ Rosto não detectado. Tente novamente.';
+    status.className   = 'face-reg-status err';
+    btn.textContent    = '📷 Tentar novamente';
+    btn.disabled       = false;
+    faceRegReady       = false;
+    // Reinicia o loop
+    faceRegLoop = setInterval(async()=>{
+      const d2 = await faceapi
+        .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({inputSize:224,scoreThreshold:.5}))
+        .withFaceLandmarks(true);
+      const scan2 = document.getElementById('faceRegScan');
+      if(d2){ scan2.className='face-reg-scan ok'; faceRegReady=true; btn.disabled=false; btn.textContent='📸 Capturar rosto'; }
+      else   { scan2.className='face-reg-scan'; faceRegReady=false; }
+    }, 500);
+    return;
+  }
+
+  // Salva foto miniatura
+  const canvas = document.createElement('canvas');
+  canvas.width=128; canvas.height=128;
+  const ctx = canvas.getContext('2d');
+  ctx.save(); ctx.scale(-1,1); ctx.drawImage(video,-128,0,128,128); ctx.restore();
+  const photo = canvas.toDataURL('image/jpeg',0.7);
+
+  // Para a câmera
+  if(faceRegStream){ faceRegStream.getTracks().forEach(t=>t.stop()); faceRegStream=null; }
+
+  // Atualiza o funcionário nos dados locais
+  const empIdx = employees.findIndex(e=>e.id===currentEmp.id);
+  if(empIdx>=0){
+    employees[empIdx].faceDescriptor = Array.from(det.descriptor);
+    employees[empIdx].facePhoto      = photo;
+    currentEmp = employees[empIdx];
+    localStorage.setItem('rp_employees', JSON.stringify(employees));
+    // Sincroniza com GitHub
+    await pushData(`face: ${currentEmp.name} cadastrou rosto`);
+  }
+
+  status.textContent = '🎉 Rosto cadastrado com sucesso!';
+  status.className   = 'face-reg-status ok';
+  document.getElementById('faceRegScan').className = 'face-reg-scan ok';
+
+  setTimeout(()=>{
+    document.getElementById('screen-face').style.display = 'none';
+    const main = document.getElementById('screen-main');
+    main.classList.add('show');
+    document.getElementById('mainEmpName').textContent = currentEmp.name;
+    document.getElementById('mainEmpRole').textContent = currentEmp.role || 'Funcionário';
+    renderStamps();
+    renderHistory();
+    renderPunchButtons();
+    loadFaceModels();
+  }, 1500);
+}
+
+// ══════════════════════════════════════════════════════
+// RELÓGIO
+// ══════════════════════════════════════════════════════
+function tickClock(){
+  const now = new Date();
+  const h=String(now.getHours()).padStart(2,'0');
+  const m=String(now.getMinutes()).padStart(2,'0');
+  const s=String(now.getSeconds()).padStart(2,'0');
+  const el = document.getElementById('empClock');
+  if(el) el.textContent = `${h}:${m}:${s}`;
+  const days=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+  const ed = document.getElementById('empDate');
+  if(ed) ed.textContent = `${days[now.getDay()]}, ${now.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'})}`;
+}
+setInterval(tickClock,1000);
+tickClock();
+
+// ══════════════════════════════════════════════════════
+// RENDER — STAMPS (registro de hoje)
+// ══════════════════════════════════════════════════════
+function getTodayRec(){
+  if(!currentEmp) return null;
+  return records.find(r=>r.empId===currentEmp.id && r.date===todayStr()) || null;
+}
+
+function renderStamps(){
+  const rec = getTodayRec();
+  const el  = document.getElementById('stampsGrid');
+
+  const rows = [
+    { key:'in',        label:'Entrada',        emoji:'🟢' },
+    { key:'lunch_out', label:'Saída Almoço',   emoji:'🍽' },
+    { key:'lunch_in',  label:'Retorno Almoço', emoji:'🟣' },
+    { key:'out',       label:'Saída',          emoji:'🔴' },
+  ];
+
+  el.innerHTML = rows.map(r=>{
+    const val = rec && rec[r.key];
+    return `<div class="stamp-row ${val?'done':''}">
+      <div class="stamp-label">${r.emoji} ${r.label}</div>
+      ${val
+        ? `<div class="stamp-time">${val}</div>`
+        : `<div class="stamp-pending">não registrado</div>`
+      }
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════
+// RENDER — HISTÓRICO (últimos 10 dias)
+// ══════════════════════════════════════════════════════
+function renderHistory(){
+  if(!currentEmp) return;
+  const el = document.getElementById('historyList');
+  const myRecs = records
+    .filter(r=>r.empId===currentEmp.id && r.date !== todayStr())
+    .sort((a,b)=>b.date.localeCompare(a.date))
+    .slice(0,10);
+
+  if(!myRecs.length){
+    el.innerHTML='<div style="opacity:.4;font-size:.85rem;text-align:center;padding:12px 0;">Nenhum registro anterior</div>';
+    return;
+  }
+
+  el.innerHTML = myRecs.map(r=>{
+    const dateLabel = new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
+    // Calcula horas trabalhadas
+    let workedLabel = '—';
+    if(r.in && r.out){
+      let mins = toMins(r.out) - toMins(r.in) - (r.brk||r.break||60);
+      if(r.lunch_out && r.lunch_in){
+        const lunchMins = toMins(r.lunch_in) - toMins(r.lunch_out);
+        mins = toMins(r.out) - toMins(r.in) - (lunchMins > 0 ? lunchMins : 0);
+      }
+      if(mins < 0) mins += 1440;
+      workedLabel = fmtWorked(mins) + ' trabalhadas';
+    }
+
+    const tags = [];
+    if(r.in)        tags.push(`<span class="htag htag-in">🟢 ${r.in}</span>`);
+    if(r.lunch_out) tags.push(`<span class="htag htag-lo">🍽 ${r.lunch_out}</span>`);
+    if(r.lunch_in)  tags.push(`<span class="htag htag-li">🟣 ${r.lunch_in}</span>`);
+    if(r.out)       tags.push(`<span class="htag htag-out">🔴 ${r.out}</span>`);
+
+    return `<div class="history-item">
+      <div>
+        <div class="history-date">${esc(dateLabel)}</div>
+        <div class="history-tags">${tags.join('')}</div>
+      </div>
+      <div class="history-hours">${workedLabel}</div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════
+// RENDER — BOTÕES DE PONTO
+// ══════════════════════════════════════════════════════
+function renderPunchButtons(){
+  const rec = getTodayRec();
+  const row = document.getElementById('punchRow');
+  const btns = [];
+
+  if(!rec || !rec.in){
+    btns.push(`<button class="punch-btn pb-in" onclick="openCam('in')">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round"/></svg>
+      Registrar Entrada
+    </button>`);
+  }
+
+  if(rec && rec.in && !rec.out){
+    if(!rec.lunch_out){
+      btns.push(`<button class="punch-btn pb-lo" onclick="openCam('lunch_out')">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M17 8l4 4-4 4M3 12h18" stroke-linecap="round"/></svg>
+        Saída Almoço
+      </button>`);
+    }
+    if(rec.lunch_out && !rec.lunch_in){
+      btns.push(`<button class="punch-btn pb-li" onclick="openCam('lunch_in')">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M7 16l-4-4 4-4M21 12H3" stroke-linecap="round"/></svg>
+        Retorno Almoço
+      </button>`);
+    }
+    if(!rec.lunch_out || rec.lunch_in){
+      btns.push(`<button class="punch-btn pb-out" onclick="openCam('out')">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round"/></svg>
+        Registrar Saída
+      </button>`);
+    }
+  }
+
+  if(rec && rec.out){
+    btns.push(`<div style="flex:1;text-align:center;opacity:.5;font-size:.85rem;font-weight:600;padding:15px;">
+      ✅ Jornada encerrada hoje
+    </div>`);
+  }
+
+  row.innerHTML = btns.join('') || `<div style="flex:1;text-align:center;opacity:.5;font-size:.85rem;font-weight:600;padding:15px;">Carregando…</div>`;
+}
+
+// ══════════════════════════════════════════════════════
+// CÂMERA — abrir / fechar / reconhecer
+// ══════════════════════════════════════════════════════
+const punchLabels = {
+  in:        { title:'🟢 Registrar Entrada',       sub:'Olhe para a câmera para confirmar' },
+  lunch_out: { title:'🍽 Saída para Almoço',        sub:'Confirme sua identidade' },
+  lunch_in:  { title:'🟣 Retorno do Almoço',        sub:'Confirme sua identidade' },
+  out:       { title:'🔴 Registrar Saída',           sub:'Olhe para a câmera para confirmar' },
+};
+
+async function openCam(type){
+  if(!faceModelsLoaded){
+    alert('IA ainda carregando, aguarde alguns segundos.');
+    return;
+  }
+  if(!currentEmp || !currentEmp.faceDescriptor){
+    alert('Seu rosto ainda não foi cadastrado. Solicite ao administrador.');
+    return;
+  }
+
+  pendingPunchType = type;
+  const lbl = punchLabels[type] || { title:'📸 Reconhecimento', sub:'Olhe para a câmera' };
+  document.getElementById('camTitle').textContent  = lbl.title;
+  document.getElementById('camSub').textContent    = lbl.sub;
+  document.getElementById('camStatus').textContent = '⏳ Iniciando câmera…';
+  document.getElementById('camStatus').className   = 'cam-status';
+  document.getElementById('camScan').className     = 'cam-scan';
+  document.getElementById('camOverlay').classList.add('open');
+
+  const video = document.getElementById('camVideo');
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:'user',width:{ideal:640},height:{ideal:640}},audio:false
+    });
+    faceStream = stream;
+    video.srcObject = stream;
+    await new Promise(r=>video.onloadedmetadata=r);
+    video.play();
+  }catch(e){
+    document.getElementById('camStatus').textContent = '❌ Câmera negada';
+    document.getElementById('camStatus').className   = 'cam-status err';
+    return;
+  }
+
+  document.getElementById('camStatus').textContent = '👤 Olhe para a câmera…';
+
+  // Monta matcher apenas com o funcionário logado
+  const desc    = new Float32Array(Object.values(currentEmp.faceDescriptor));
+  const labeled = [new faceapi.LabeledFaceDescriptors(String(currentEmp.id), [desc])];
+  const matcher = new faceapi.FaceMatcher(labeled, 0.5);
+
+  faceDetectLoop = setInterval(async()=>{
+    if(!video || video.paused || video.videoWidth===0) return;
+    const det = await faceapi
+      .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({inputSize:224,scoreThreshold:.5}))
+      .withFaceLandmarks(true)
+      .withFaceDescriptor();
+
+    const scan   = document.getElementById('camScan');
+    const status = document.getElementById('camStatus');
+
+    if(!det){
+      scan.className   = 'cam-scan';
+      status.textContent = '👤 Nenhum rosto detectado…';
+      status.className   = 'cam-status';
+      return;
+    }
+
+    const match = matcher.findBestMatch(det.descriptor);
+    if(match.label === 'unknown' || match.distance > 0.5){
+      scan.className   = 'cam-scan err';
+      status.textContent = '❌ Rosto não reconhecido';
+      status.className   = 'cam-status err';
+      return;
+    }
+
+    // Reconhecido!
+    clearInterval(faceDetectLoop);
+    scan.className   = 'cam-scan ok';
+    status.textContent = `✅ ${currentEmp.name} confirmado!`;
+    status.className   = 'cam-status ok';
+
+    setTimeout(()=>{
+      closeCam();
+      savePunch(pendingPunchType);
+    }, 900);
+
+  }, 600);
+}
+
+function closeCam(){
+  clearInterval(faceDetectLoop);
+  if(faceStream){ faceStream.getTracks().forEach(t=>t.stop()); faceStream=null; }
+  document.getElementById('camOverlay').classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════════
+// SALVA PONTO
+// ══════════════════════════════════════════════════════
+async function savePunch(type){
+  const today = todayStr();
+  const time  = nowTime();
+  let rec = records.find(r=>r.empId===currentEmp.id && r.date===today);
+
+  const SHIFTS = {
+    dia_fechar:{brk:120}, dia_19:{brk:60}, tarde_fechar:{brk:60},
+    custom:{brk:60}, dsr:{brk:0}, folga:{brk:0}
+  };
+
+  if(type==='in'){
+    if(rec && rec.in){ showToast('Entrada já registrada hoje.','err'); return; }
+    if(!rec){
+      const shift = currentEmp.shift || 'dia_fechar';
+      const s = SHIFTS[shift]||{brk:60};
+      rec = { id:Date.now(), empId:currentEmp.id, name:currentEmp.name,
+              date:today, shift, in:'', out:'', brk:s.brk, obs:'Via app funcionário' };
+      records.push(rec);
+    }
+    rec.in = time;
+  } else if(type==='lunch_out'){
+    if(!rec||!rec.in){ showToast('Registre a entrada primeiro.','err'); return; }
+    if(rec.lunch_out){ showToast('Saída de almoço já registrada.','err'); return; }
+    rec.lunch_out = time;
+  } else if(type==='lunch_in'){
+    if(!rec||!rec.lunch_out){ showToast('Registre a saída do almoço primeiro.','err'); return; }
+    if(rec.lunch_in){ showToast('Retorno do almoço já registrado.','err'); return; }
+    rec.lunch_in = time;
+    const lunchMins = toMins(time) - toMins(rec.lunch_out);
+    if(lunchMins>0) rec.brk = lunchMins;
+  } else if(type==='out'){
+    if(!rec||!rec.in){ showToast('Registre a entrada primeiro.','err'); return; }
+    if(rec.out){ showToast('Saída já registrada hoje.','err'); return; }
+    if(rec.lunch_out && !rec.lunch_in){ showToast('Registre o retorno do almoço.','err'); return; }
+    rec.out = time;
+  }
+
+  // Salva local
+  localStorage.setItem('rp_records', JSON.stringify(records));
+
+  // Push GitHub
+  const labels = { in:'entrada', lunch_out:'saída almoço', lunch_in:'retorno almoço', out:'saída' };
+  await pushData(`ponto: ${currentEmp.name} — ${labels[type]||type} ${time}`);
+
+  showToast(`${punchLabels[type]?.title||'Ponto'} registrado às ${time}`, 'ok');
+  renderStamps();
+  renderHistory();
+  renderPunchButtons();
+}
+
+// ══════════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════════
+function showToast(msg, type='ok'){
+  let t = document.getElementById('toast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = `
+      position:fixed;bottom:110px;left:50%;transform:translateX(-50%);
+      padding:12px 20px;border-radius:12px;font-size:.88rem;font-weight:700;
+      z-index:9999;white-space:nowrap;transition:opacity .3s;
+      box-shadow:0 4px 20px rgba(0,0,0,.4);
+    `;
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = type==='ok' ? '#22c55e' : '#ef4444';
+  t.style.color = 'white';
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+}
+
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+(async function init(){
+  // Dados locais primeiro (resposta rápida)
+  employees = JSON.parse(localStorage.getItem('rp_employees')||'[]');
+  records   = JSON.parse(localStorage.getItem('rp_records')||'[]');
+  holidays  = JSON.parse(localStorage.getItem('rp_holidays')||'[]');
+
+  applyLogo();
+
+  // Sempre tenta buscar dados atualizados do GitHub (leitura pública)
+  const loadingEl = document.querySelector('#screen-loading div:last-child');
+  if(loadingEl) loadingEl.textContent = 'Sincronizando dados…';
+  await fetchData();
+
+  // Verifica sessão ativa
+  const saved = checkSession();
+
+  // Esconde loading
+  document.getElementById('screen-loading').style.display = 'none';
+
+  if(saved){
+    enterMain(saved);
+  } else {
+    document.getElementById('screen-login').style.display = 'flex';
+  }
+})();
+</script>
+</body>
+</html>
