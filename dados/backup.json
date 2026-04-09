@@ -415,7 +415,7 @@
       "shift": "dia_fechar"
     },
     {
-      "active": true,
+      "active": false,
       "faceDescriptor": [
         -0.0422549657523632,
         0.0898918434977531,
@@ -555,7 +555,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T15:00:01.505Z",
+  "lastSync": "2026-04-09T15:07:50.572Z",
   "records": [
     {
       "break": 120,
