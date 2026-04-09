@@ -17,23 +17,27 @@ jobs:
           token: ${{ secrets.GH_PAT }}
 
       - name: Salvar dados
-        env:
-          PAYLOAD: ${{ toJson(github.event.client_payload.data) }}
-        run: |
-          mkdir -p dados
-          python3 -c "
-          import os, json
-          payload = os.environ['PAYLOAD']
-          data = json.loads(payload)
-          with open('dados/backup.json', 'w', encoding='utf-8') as f:
-              json.dump(data, f, ensure_ascii=False, indent=2)
-          print('Dados salvos com sucesso')
-          "
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const data = context.payload.client_payload.data;
+            const dir = path.join(process.env.GITHUB_WORKSPACE, 'dados');
+            if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+            fs.writeFileSync(
+              path.join(dir, 'backup.json'),
+              JSON.stringify(data, null, 2),
+              'utf8'
+            );
+            console.log('Dados salvos:', Object.keys(data));
 
       - name: Commit
         run: |
           git config user.name  "Sync Bot"
           git config user.email "sync@registro-ponto"
           git add dados/backup.json
-          git diff --cached --quiet || git commit -m "sync: $(date -u '+%d/%m/%Y %H:%M') UTC"
+          git diff --cached --quiet && echo "Sem alterações" && exit 0
+          git commit -m "sync: $(date -u '+%d/%m/%Y %H:%M') UTC"
+          git pull --rebase origin main
           git push
