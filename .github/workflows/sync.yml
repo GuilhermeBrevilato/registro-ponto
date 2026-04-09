@@ -39,5 +39,5 @@ jobs:
           git add dados/backup.json
           git diff --cached --quiet && echo "Sem alterações" && exit 0
           git commit -m "sync: $(date -u '+%d/%m/%Y %H:%M') UTC"
-          git pull --rebase origin main
-          git push
+          git pull --rebase origin main || git rebase --abort
+          git push --force-with-lease || git push
