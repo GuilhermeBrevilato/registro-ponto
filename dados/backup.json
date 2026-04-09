@@ -277,19 +277,10 @@
       "role": "Auxiliar",
       "senha": "1010",
       "shift": "dia_fechar"
-    },
-    {
-      "active": true,
-      "id": 1775777104345,
-      "login": "franklin",
-      "name": "Franklin",
-      "role": "Encanador",
-      "senha": "12345",
-      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T23:25:35.852Z",
+  "lastSync": "2026-04-09T23:27:01.264Z",
   "records": [
     {
       "brk": 1,
