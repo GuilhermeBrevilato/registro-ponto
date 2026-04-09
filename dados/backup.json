@@ -280,7 +280,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T22:30:18.652Z",
+  "lastSync": "2026-04-09T22:30:28.746Z",
   "records": [
     {
       "brk": 120,
@@ -303,7 +303,7 @@
       "lunch_out": "19:29",
       "name": "Mylene Cristina",
       "obs": "Via app funcionário",
-      "out": "",
+      "out": "19:30",
       "shift": "dia_fechar"
     }
   ]
