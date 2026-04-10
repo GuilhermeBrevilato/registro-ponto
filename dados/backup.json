@@ -567,16 +567,16 @@
     },
     {
       "active": true,
-      "id": 1775831852367,
+      "id": 1775832016144,
       "login": "nilva",
-      "name": "NILVA MARIA",
-      "role": "Auxiliar",
+      "name": "Nilva",
+      "role": "",
       "senha": "1010",
       "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T14:37:32.371Z",
+  "lastSync": "2026-04-10T14:40:16.150Z",
   "records": [
     {
       "brk": 1,
