@@ -280,15 +280,6 @@
     },
     {
       "active": true,
-      "id": 1775777237341,
-      "login": "franklin",
-      "name": "Franklin",
-      "role": "Encanador",
-      "senha": "12345678",
-      "shift": "dia_fechar"
-    },
-    {
-      "active": true,
       "faceDescriptor": [
         -0.104237742722034,
         0.087751068174839,
@@ -567,7 +558,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T03:12:25.426Z",
+  "lastSync": "2026-04-10T03:13:33.979Z",
   "records": [
     {
       "brk": 1,
