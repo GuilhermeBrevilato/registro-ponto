@@ -555,10 +555,19 @@
       "role": "Gestor",
       "senha": "12345678",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775830863764,
+      "login": "teste2",
+      "name": "Teste2",
+      "role": "Auxiliar",
+      "senha": "2020",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T14:12:29.623Z",
+  "lastSync": "2026-04-10T14:21:43.452Z",
   "records": [
     {
       "brk": 1,
