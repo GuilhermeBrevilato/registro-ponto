@@ -437,15 +437,6 @@
     },
     {
       "active": true,
-      "id": 1775781085240,
-      "login": "juniorlisboa",
-      "name": "Junior Lisboa",
-      "role": "Gestor de tráfego",
-      "senha": "12345",
-      "shift": "dia_fechar"
-    },
-    {
-      "active": true,
       "faceDescriptor": [
         -0.137514621019363,
         0.130621567368507,
@@ -585,7 +576,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T01:06:34.482Z",
+  "lastSync": "2026-04-10T03:06:10.682Z",
   "records": [
     {
       "brk": 1,
@@ -634,5 +625,6 @@
       "out": "",
       "shift": "dia_fechar"
     }
-  ]
+  ],
+  "swaps": []
 }
