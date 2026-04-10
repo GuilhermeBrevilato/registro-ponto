@@ -585,7 +585,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T01:06:26.777Z",
+  "lastSync": "2026-04-10T01:06:34.482Z",
   "records": [
     {
       "brk": 1,
@@ -628,6 +628,7 @@
       "empId": 1775781356608,
       "id": 1775783186777,
       "in": "22:06",
+      "lunch_out": "22:06",
       "name": "Junior",
       "obs": "Via app funcionário",
       "out": "",
