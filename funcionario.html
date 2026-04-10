@@ -891,7 +891,6 @@ const GEOFENCE = {
   lat:  -23.30585,
   lng:  -50.07428,
   raio: 6000,
-  nome: 'Galliate Hamburgueria',
 };
 
 function calcDistancia(lat1,lng1,lat2,lng2){
@@ -1078,6 +1077,10 @@ function fmtMeters(v){
   return `${v} m`;
 }
 
+function fmtGeoCoords(){
+  return `${Number(GEOFENCE.lat).toFixed(5)}, ${Number(GEOFENCE.lng).toFixed(5)}`;
+}
+
 function closeGeoLimitPopup(){
   const el = document.getElementById('geoLimitPopup');
   if(el) el.remove();
@@ -1094,7 +1097,7 @@ function showGeoLimitPopup(geo){
         <div style="font-size:2rem;line-height:1;margin-bottom:8px;text-align:center;">📍</div>
         <div style="font-size:1.05rem;font-weight:800;text-align:center;margin-bottom:6px;">Fora da área de registro</div>
         <p style="font-size:.88rem;opacity:.88;text-align:center;line-height:1.45;margin:0 0 14px;">
-          Você está a <b>${fmtMeters(geo.dist)}</b> da <b>${GEOFENCE.nome}</b>.<br>
+          Você está a <b>${fmtMeters(geo.dist)}</b> do ponto<br><b>${fmtGeoCoords()}</b>.<br>
           O limite atual é <b>${fmtMeters(GEOFENCE.raio)}</b>.
         </p>
         <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;font-size:.82rem;line-height:1.45;margin-bottom:14px;">
