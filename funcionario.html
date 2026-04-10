@@ -890,7 +890,7 @@ const punchLabels = {
 const GEOFENCE = {
   lat:  -23.30585,
   lng:  -50.07428,
-  raio: 150,
+  raio: 6000,
   nome: 'Galliate Hamburgueria',
 };
 
@@ -932,8 +932,7 @@ async function openCam(type){
     showToast('📍 Verificando localização…','ok');
     const geo = await verificarGeofence();
     if(!geo.dentroRaio){
-      showToast(`❌ Você está a ${geo.dist}m do local. Registro permitido apenas a ${GEOFENCE.raio}m da ${GEOFENCE.nome}.`,'err');
-      setTimeout(()=>{},0);
+      showGeoLimitPopup(geo);
       return;
     }
   }catch(e){
@@ -1073,6 +1072,44 @@ async function savePunch(type){
 // ══════════════════════════════════════════════════════
 // TOAST
 // ══════════════════════════════════════════════════════
+
+function fmtMeters(v){
+  if(v>=1000) return (v/1000).toFixed(2).replace('.',',')+' km';
+  return `${v} m`;
+}
+
+function closeGeoLimitPopup(){
+  const el = document.getElementById('geoLimitPopup');
+  if(el) el.remove();
+}
+
+function showGeoLimitPopup(geo){
+  closeGeoLimitPopup();
+  const excess = Math.max(0, geo.dist - GEOFENCE.raio);
+  const popup = document.createElement('div');
+  popup.id = 'geoLimitPopup';
+  popup.innerHTML = `
+    <div style="position:fixed;inset:0;background:rgba(15,23,42,.65);backdrop-filter:blur(3px);z-index:10001;display:flex;align-items:center;justify-content:center;padding:20px;">
+      <div style="width:100%;max-width:360px;background:linear-gradient(160deg,#0f172a 0%,#1e293b 100%);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.45);padding:20px 18px;">
+        <div style="font-size:2rem;line-height:1;margin-bottom:8px;text-align:center;">📍</div>
+        <div style="font-size:1.05rem;font-weight:800;text-align:center;margin-bottom:6px;">Fora da área de registro</div>
+        <p style="font-size:.88rem;opacity:.88;text-align:center;line-height:1.45;margin:0 0 14px;">
+          Você está a <b>${fmtMeters(geo.dist)}</b> da <b>${GEOFENCE.nome}</b>.<br>
+          O limite atual é <b>${fmtMeters(GEOFENCE.raio)}</b>.
+        </p>
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;font-size:.82rem;line-height:1.45;margin-bottom:14px;">
+          Distância excedida: <b>${fmtMeters(excess)}</b><br>
+          Precisão do GPS: <b>±${fmtMeters(geo.accuracy || 0)}</b>
+        </div>
+        <button onclick="closeGeoLimitPopup()" style="width:100%;border:none;border-radius:12px;padding:12px 14px;font-weight:700;font-size:.92rem;background:#2563eb;color:#fff;cursor:pointer;">Entendi</button>
+      </div>
+    </div>`;
+  popup.addEventListener('click',(ev)=>{
+    if(ev.target===popup.firstElementChild) closeGeoLimitPopup();
+  });
+  document.body.appendChild(popup);
+}
+
 function showToast(msg, type='ok'){
   let t = document.getElementById('toast');
   if(!t){
