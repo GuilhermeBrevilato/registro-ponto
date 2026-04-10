@@ -434,10 +434,19 @@
       "role": "Encanador",
       "senha": "12345",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775781085240,
+      "login": "juniorlisboa",
+      "name": "Junior Lisboa",
+      "role": "Gestor de tráfego",
+      "senha": "12345",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-09T23:44:09.812Z",
+  "lastSync": "2026-04-10T00:31:27.251Z",
   "records": [
     {
       "brk": 1,
@@ -474,5 +483,6 @@
       "out": "20:44",
       "shift": "dia_fechar"
     }
-  ]
+  ],
+  "swaps": []
 }
