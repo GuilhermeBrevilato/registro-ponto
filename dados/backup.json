@@ -585,7 +585,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T01:06:02.319Z",
+  "lastSync": "2026-04-10T01:06:26.777Z",
   "records": [
     {
       "brk": 1,
@@ -620,6 +620,17 @@
       "name": "Franklin José",
       "obs": "Via app funcionário",
       "out": "20:44",
+      "shift": "dia_fechar"
+    },
+    {
+      "brk": 120,
+      "date": "2026-04-10",
+      "empId": 1775781356608,
+      "id": 1775783186777,
+      "in": "22:06",
+      "name": "Junior",
+      "obs": "Via app funcionário",
+      "out": "",
       "shift": "dia_fechar"
     }
   ]
