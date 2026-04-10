@@ -1999,10 +1999,17 @@ async function syncFromGitHub(){
     const json = await res.json();
     if(!json||!json.employees){ setSyncStatus('Backup vazio','idle'); return; }
     const localEmps = JSON.parse(localStorage.getItem('rp_employees')||'[]');
-    employees = json.employees.map(e=>{
-      const local = localEmps.find(l=>l.id===e.id);
+    const remotes = json.employees || [];
+
+    // Mantém biometria/local e também preserva funcionários criados localmente
+    // que ainda não existem no backup remoto.
+    employees = remotes.map(e=>{
+      const local = localEmps.find(l=>String(l.id)===String(e.id));
       return local ? {...e, facePhoto:local.facePhoto, faceDescriptor:local.faceDescriptor||e.faceDescriptor} : e;
     });
+
+    const localOnly = localEmps.filter(l=>!remotes.some(e=>String(e.id)===String(l.id)));
+    if(localOnly.length) employees.push(...localOnly);
     records  = json.records  || [];
     swaps    = json.swaps    || [];
     holidays = json.holidays || [];
@@ -2537,6 +2544,10 @@ function addEmployee(){
 
   // Mostra modal de credenciais
   showCredModal(name, login, senha);
+
+  // Se houver token configurado, sincroniza automaticamente para não perder
+  // funcionários recém-cadastrados ao recarregar a página.
+  syncToGitHub();
 }
 
 function showCredModal(name, login, senha){
