@@ -289,15 +289,6 @@
     },
     {
       "active": true,
-      "id": 1775777485677,
-      "login": "franklin1",
-      "name": "Franklin Vitorino",
-      "role": "Encanador",
-      "senha": "12345678",
-      "shift": "dia_fechar"
-    },
-    {
-      "active": true,
       "faceDescriptor": [
         -0.104237742722034,
         0.087751068174839,
@@ -576,7 +567,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T03:06:10.682Z",
+  "lastSync": "2026-04-10T03:12:25.426Z",
   "records": [
     {
       "brk": 1,
