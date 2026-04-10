@@ -573,10 +573,19 @@
       "role": "",
       "senha": "1010",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775832105456,
+      "login": "janaina",
+      "name": "Janaina",
+      "role": "auxiliar",
+      "senha": "1010",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T14:40:16.150Z",
+  "lastSync": "2026-04-10T14:41:45.461Z",
   "records": [
     {
       "brk": 1,
