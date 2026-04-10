@@ -443,10 +443,19 @@
       "role": "Gestor de tráfego",
       "senha": "12345",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1775781356608,
+      "login": "juniorlisboa1",
+      "name": "Junior",
+      "role": "Gestor",
+      "senha": "12345678",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T00:31:27.251Z",
+  "lastSync": "2026-04-10T00:35:58.615Z",
   "records": [
     {
       "brk": 1,
