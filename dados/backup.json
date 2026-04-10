@@ -558,15 +558,6 @@
     },
     {
       "active": true,
-      "id": 1775830988336,
-      "login": "tt",
-      "name": "Teste2",
-      "role": "Aux",
-      "senha": "2020",
-      "shift": "dia_fechar"
-    },
-    {
-      "active": true,
       "faceDescriptor": [
         -0.0429084002971649,
         0.0641177296638489,
@@ -984,7 +975,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-10T22:19:20.134Z",
+  "lastSync": "2026-04-10T22:36:27.249Z",
   "records": [
     {
       "brk": 1,
@@ -1068,5 +1059,6 @@
       "out": "",
       "shift": "dia_fechar"
     }
-  ]
+  ],
+  "swaps": []
 }
