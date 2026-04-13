@@ -975,7 +975,7 @@
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-11T02:55:58.191Z",
+  "lastSync": "2026-04-13T14:48:33.920Z",
   "records": [
     {
       "brk": 1,
@@ -1066,6 +1066,17 @@
       "empId": 1775832105456,
       "id": 1775876158190,
       "in": "23:55",
+      "name": "Janaina",
+      "obs": "Via app funcionário",
+      "out": "",
+      "shift": "dia_fechar"
+    },
+    {
+      "brk": 120,
+      "date": "2026-04-13",
+      "empId": 1775832105456,
+      "id": 1776091713918,
+      "in": "11:48",
       "name": "Janaina",
       "obs": "Via app funcionário",
       "out": "",
