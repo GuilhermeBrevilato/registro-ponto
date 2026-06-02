@@ -972,10 +972,19 @@
       "role": "gerente",
       "senha": "1010",
       "shift": "dia_fechar"
+    },
+    {
+      "active": true,
+      "id": 1780408124942,
+      "login": "guisbbb",
+      "name": "Guilherme sb",
+      "role": "Atendente",
+      "senha": "1234",
+      "shift": "dia_fechar"
     }
   ],
   "holidays": [],
-  "lastSync": "2026-04-14T02:19:32.536Z",
+  "lastSync": "2026-06-02T13:48:44.952Z",
   "records": [
     {
       "brk": 1,
@@ -1095,5 +1104,6 @@
       "out": "",
       "shift": "dia_fechar"
     }
-  ]
+  ],
+  "swaps": []
 }
